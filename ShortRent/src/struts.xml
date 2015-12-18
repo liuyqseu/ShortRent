@@ -31,22 +31,12 @@
 		
 		<!-- liuyanqing -->		
 		<action name="toCreateHouse" class="com.ruanko.web.ToCreateHouseAction" method="redirect">			
-			<result name="success">/ShortRent/index.jsp</result>
+			<result name="success">/index.jsp</result>
 		</action>
 		
-		<action name="createThisHouse" class="com.ruanko.web.CreateHouseAction" method="execute">			
-			<result name="success">/ShortRent/index.jsp</result>
+		<action name="createHouse" class="com.ruanko.web.CreateHouseAction" method="execute">			
+			<result name="success">/index.jsp</result>
 		</action>
-		
-		
-		
-		
-	<!-- 	
-		<action name="UploadServlet" class="com.ruanko.web.UploadServlet" method="poster">			
-			<result></result>
-		</action>
-		 -->
-		
 		
 		
 		

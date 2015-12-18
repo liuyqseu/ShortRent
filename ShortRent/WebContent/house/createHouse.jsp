@@ -12,14 +12,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<link href="../css/style.css" type="text/css" rel="stylesheet" />
 		<link href="../css/reg.css" type="text/css" rel="stylesheet" />
 		<link href="../css/house.css" type="text/css" rel="stylesheet" />
+		<link href="../css/timepicki.css" type="text/css" rel="stylesheet" />
 		
 		<script type="text/javascript" src="../script/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="../script/timepicki.js"></script>
 		
 		<script type="text/javascript">
-			
-			/* 检查【必填项】是否已输入和输入是否符合要求 */
+		
+			/* 检查【必填项】是否已输入 */
 			function check()
-			{
+			{				
 				if($("#name").attr("value").trim().length==0)
 				{
 					alert("请输入【房屋名称】");
@@ -34,9 +36,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					return;
 				}
 				
-				if($("#dayprice").attr("value").trim().length==0)
+				if($("#dayprice").attr("value").trim().length==0 )
 				{
-					alert("请输入【日租价】");	
+					alert("请输入【日租价】，必须为数字，可包含小数！");	
 					$("#dayprice").focus();
 					return;
 				}
@@ -50,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 				if($("#area").attr("value").trim().length==0)
 				{
-					alert("请输入【面积】");	
+					alert("请输入【面积】,必须为数字，可包含小数！");	
 					$("#area").focus();
 					return;
 				}
@@ -84,36 +86,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					return;
 				}
 				
-				
 				if($("#minday").attr("value").trim().length==0)
-				{
-					alert("请输入【最小天数】");
+				{				
+					alert("请输入【最小天数】，必须为数字！");
 					$("#minday").focus();
 					return;
 				}
 				
 				if($("#maxday").attr("value").trim().length==0)
 				{
-					alert("请输入【最大天数】");	
+					alert("请输入【最大天数】，必须为数字！");	
 					$("#maxday").focus();
 					return;
 				}
-				
+							
 				$("#createHouseForm").submit()
 				
 			}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			
+			//判断是否为正整数
+			function checkInt(v)
+			{
+				 var r=/^[0-9]*$/;
+				 if(!r.test(v) & v!='')
+				 {
+			           alert('只能输入正整数！');
+			           
+			           //将不符合规范的输入清除
+			           if(!r.test($("#minday").attr("value")))
+			           {
+			        	   $("#minday").attr("value","");
+			           }
+			           
+			           if(!r.test($("#maxday").attr("value")))
+			           {
+			        	   $("#maxday").attr("value","");
+			           } 
+			           
+			           if(!r.test($("#refundday").attr("value")))
+			           {
+			        	   $("#refundday").attr("value","");
+			           } 			           
+			     }
+			}
+			
+			//判断是否为正浮点数
+			function checkFloat(v)
+			{
+				var reg=/^(([0-9]+\.[0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+				if(!reg.test(v) & v!='')
+				{
+		            alert('只能输入正数！');
+		            
+		          //将不符合规范的输入清除
+		           if(!reg.test($("#dayprice").attr("value")))
+		           {
+		        	   $("#dayprice").attr("value","");
+		           }
+		           
+		           if(!reg.test($("#area").attr("value")))
+		           {
+		        	   $("#area").attr("value","");
+		           } 		                    
+		     	}				
+			}
+		/* } */	
 		</script>
-		
-		
 		
 	</head>
 
@@ -150,7 +188,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="index_zbg">
 					<div class="reg-main">
 						
-						<form  id="createHouseForm" name="createHouseForm" action="createThisHouse.action">
+						<form  id="createHouseForm" name="createHouseForm" action="createHouse.action" 
+							enctype="multipart/form-data" method="post">
 						
 							<div class="reg-left">
 							
@@ -162,30 +201,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<div class="row_padding">
 									&nbsp;&nbsp;<span>发&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;票：</span>
 									<input id="bill" name="bill" type="radio" value="1" />提供
-									<!-- <input id="bill" name="bill" type="radio" value="2" />不提供		 -->							
+									<input id="bill" name="bill" type="radio" value="2" />不提供						
 								</div>
 																	
 								<div class="row_padding">
 									&nbsp;&nbsp;出租类型：
 									<input id="renttype" name="renttype" type="radio" value="1" />整租
-									<!-- <input id="renttype" name="renttype" type="radio" value="2" />单间
-									<input id="renttype" name="renttype" type="radio" value="3" />席位	 -->																		
+									<input id="renttype" name="renttype" type="radio" value="2" />单间
+									<input id="renttype" name="renttype" type="radio" value="3" />床位																
 								</div>								
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;房屋类型：
 									<select id="kind" name="kind">
-										<option style="width:100px" value=1>1</option>
-										<option style="width:100px" value=2>2</option>
-										<option style="width:100px" value=3>3</option>
-										<option style="width:100px" value=4>4</option>
-										<option style="width:100px" value=5>5</option>
+										<option style="width:100px" value=1>酒店</option>
+										<option style="width:100px" value=2>客栈</option>
+										<option style="width:100px" value=3>旅馆</option>
 									</select>	
 								</div>									
 								
 								<div class="row_padding">										
 									<span id="star_color">*</span>面&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;积：
-									<input id="area" name="area" type="text"/>平方米
+									<input id="area" name="area" type="text" onpropertychange="checkFloat(this.value)" oninput="checkFloat(this.value)"/>平方米
 								</div>
 								
 								<div class="row_padding">
@@ -215,9 +252,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<select id="bedroomnum" name="bedroomnum">
 										<option value=1>1</option>
 										<option value=2>2</option>
-										<!-- <option>3</option>
-										<option>4</option>
-										<option>5</option>		 -->							
+										<option value=3>3</option>
+										<option value=4>4</option>
+										<option value=5>5</option>					
 									</select>									
 								</div>
 								
@@ -226,17 +263,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<select id="roomnum" name="roomnum">
 										<option value=1>1</option>
 										<option value=2>2</option>
-										<!-- <option>3</option>
-										<option>4</option>
-										<option>5</option>	 -->								
+										<option value=3>3</option>
+										<option value=4>4</option>
+										<option value=5>5</option>									
 									</select>	
 								</div>
 								
+								<!-- 不规范字段 -->
 								<div class="row_padding">
 									&nbsp;&nbsp;床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：
 									<select id="bedtype" name="bedtype">
-										<option value=1>1</option>
-										<option value=2>2</option>
+										<option>双人床</option>
+										<option>单人床</option>
+										<option>高低床</option>
 									</select>	
 								</div>
 								
@@ -245,31 +284,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<select id="toiletnum" name="toiletnum">
 										<option value=1>1</option>
 										<option value=2>2</option>
-										<!-- <option>3</option>
-										<option>4</option>
-										<option>5</option>		 -->							
+										<option value=3>3</option>
 									</select>	
 								</div>
 								
 								<div class="row_padding">
-									&nbsp;&nbsp;入住时间：
-									<input id="checkinTime" name="checkinTime" type="text"/><!-- 这里到时候添加插件选择时间 -->								
+									&nbsp;&nbsp;入住时间：									
+									<select id="checkinTime" name="checkinTime">
+										<option>12:00</option>
+										<option>13:00</option>
+										<option>14:00</option>
+									</select>		
+															
 								</div>
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;退房时间：
-									<input id="checkoutTime" name="checkoutTime" type="text"/><!-- 这里到时候添加插件选择时间 -->										
+									<select id="checkoutTime" name="checkoutTime">
+										<option>11:00</option>
+										<option>12:00</option>
+										<option>13:00</option>
+										<option>14:00</option>
+									</select>											
 								</div>
 								
 								<div class="row_padding">
 									<span id="star_color">*</span>最小天数：
-									<input id="minday" name="minday" type="text"/><!-- 这里到时候添加插件选择时间 -->										
-								</div>
-								
+									<input id="minday" name="minday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"/>									
+								</div>								
 								
 								<div class="row_padding">
 									<span id="star_color">*</span>最大天数：
-									<input id="maxday" name="maxday" type="text"/><!-- 这里到时候添加插件选择时间 -->	
+									<input id="maxday" name="maxday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"/>
 								</div>
 								
 								<div class="row_padding2">									
@@ -281,18 +327,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<input name="clear" type="reset"  value="清空" />																	
 								</div>					
 																
-							</div><!-- end of reg-left -->		
-
+							</div>
+							<!-- end of reg-left -->	
 							
+														
 							<div class="reg-right1">
 								<div class="row_padding">
 									<span id="star_color">*</span>全额退款日：
-									<input id="refundday" name="refundday" type="text"/>								
+									<input id="refundday" name="refundday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"/><!-- 这里到时候添加插件选择时间 -->								
 								</div>
 																	
 								<div class="row_padding">
 									<span id="star_color">*</span>日&nbsp;&nbsp;&nbsp;&nbsp;租&nbsp;&nbsp;&nbsp;&nbsp;价：
-									<input id="dayprice" name="dayprice" type="text"/>元/天	
+									<input id="dayprice" name="dayprice" type="text" onpropertychange="checkFloat(this.value)" oninput="checkFloat(this.value)"/>元/天	
 								</div>
 								
 								<div class="row_padding">								
@@ -315,6 +362,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<textarea id="address" name="address" rows="2" cols="15"></textarea>	
 								</div>
 								
+								<!-- 不规范字段 -->
 								<div class="padding_row">
 									&nbsp;&nbsp;付款规则：
 									<select id="payrule" name="payrule">
@@ -325,22 +373,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								
 								<div class="padding_row">
 									<span id="star_color">*</span>房屋图片：
-									<input id="picture1" name="picture1" type="text" class="filebox"/>
+									<input id="picture1" name="picture01" type="file" class="filebox"/>
 								</div>
 								
 								<div class="padding_row">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="picture2" name="picture2" type="text" class="filebox"/>
+									<input id="picture2" name="picture02" type="file" class="filebox"/>
 								</div>
 								
 								<div class="padding_row">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="picture3" name="picture3" type="text" class="filebox"/>
+									<input id="picture3" name="picture03" type="file" class="filebox"/>
 								</div>
 								
-							</div><!-- end of right1 -->
+								<!-- 隐藏输入框，用于设定默认的状态和删除标志，以及获取用户id -->
+								<input id="user_id" name="user_id" type="hidden" value="1"/>
+								<input id="state" name="state" type="hidden" value="1"/>
+								<input id="del" name="del" type="hidden" value="0"/>
+								
+							</div>
+							<!-- end of right1 -->
 											
 						</form>		
 

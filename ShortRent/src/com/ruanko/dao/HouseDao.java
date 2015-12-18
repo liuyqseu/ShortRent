@@ -12,16 +12,12 @@ public class HouseDao
 	
 	public void save(House house)
 	{
-		
 		java.sql.Connection conn = BaseDao.getConnection();		
 		java.sql.PreparedStatement ppstmt = null;
 		
 		System.out.println("到达save()");
 		
-		
 		System.out.println("this is test of house： "+ house.getName());
-		
-		
 		
 		try
 		{
