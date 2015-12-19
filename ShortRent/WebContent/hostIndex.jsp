@@ -9,6 +9,7 @@
 <body>
 
 <a href="toCreateHouse.action">创建房屋</a>
+<a href="showMyHouse.action">我的房屋</a>
 
 
 </body>

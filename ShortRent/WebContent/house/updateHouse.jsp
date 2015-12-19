@@ -4,18 +4,22 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
+<%@ taglib uri="/struts-tags" prefix="s"%>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<title>修改房屋 - 轻松短租网</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link href="../css/style.css" type="text/css" rel="stylesheet" />
-		<link href="../css/reg.css" type="text/css" rel="stylesheet" />
-		<link href="../css/house.css" type="text/css" rel="stylesheet" />
-		<link href="../css/timepicki.css" type="text/css" rel="stylesheet" />
+		<title>房屋管理 - 轻松短租网</title>
 		
-		<script type="text/javascript" src="../script/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="../script/timepicki.js"></script>
+		<!-- 因为从action跳转到该页面，该页面地址为：http://localhost:8080/ShortRent/toModifyHouse.action?id=3，所以需要修改引用地址 -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="css/style.css" type="text/css" rel="stylesheet" />
+		<link href="css/reg.css" type="text/css" rel="stylesheet" />
+		<link href="css/house.css" type="text/css" rel="stylesheet" />
+		<link href="css/timepicki.css" type="text/css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="script/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="script/timepicki.js"></script>
 		
 		<script type="text/javascript">
 		
@@ -78,14 +82,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					return;
 				}
 				
-				if($("#picture1").attr("value").trim().length+$("#picture1").attr("value").trim().length
-						+$("#picture1").attr("value").trim().length==0)
-				{
-					alert("请最少上传一张图片");	
-					$("#picture1").focus();
-					return;
-				}
-				
 				if($("#minday").attr("value").trim().length==0)
 				{				
 					alert("请输入【最小天数】，必须为数字！");
@@ -100,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					return;
 				}
 							
-				$("#createHouseForm").submit()
+				$("#updateHouseForm").submit()
 				
 			}
 			
@@ -188,134 +184,88 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="index_zbg">
 					<div class="reg-main">
 						
-						<form  id="createHouseForm" name="createHouseForm" action="createHouse.action" 
+						<form  id="updateHouseForm" name="updateHouseForm" action="updateHouse.action" 
 							enctype="multipart/form-data" method="post">
-						
-							<div class="reg-left">
 							
+							<div class="reg-left">
+								
 								<div class="row_padding">									
 									<span id="star_color">*</span>房屋名称：
-									<input id="name" name="name" type="text" />	
+									<input id="name" name="name" type="text" value=<s:property value="house.name" />     />	
 								</div>
 								
 								<div class="row_padding">
-									&nbsp;&nbsp;<span>发&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;票：</span>
-									<input id="bill" name="bill" type="radio" value="1" />提供
-									<input id="bill" name="bill" type="radio" value="2" />不提供						
+									&nbsp;&nbsp;<span>发&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;票：</span>									
+									<s:radio list="#{'1':'提供','2':'不提供'}"  name = "house.bill"></s:radio>	
 								</div>
 																	
 								<div class="row_padding">
 									&nbsp;&nbsp;出租类型：
-									<input id="renttype" name="renttype" type="radio" value="1" />整租
-									<input id="renttype" name="renttype" type="radio" value="2" />单间
-									<input id="renttype" name="renttype" type="radio" value="3" />床位																
+									<s:radio list="#{'1':'整租','2':'单间','3':'床位'}" name = "house.renttype"></s:radio>	
 								</div>								
 								
 								<div class="row_padding">
-									&nbsp;&nbsp;房屋类型：
-									<select id="kind" name="kind">
-										<option style="width:100px" value=1>酒店</option>
-										<option style="width:100px" value=2>客栈</option>
-										<option style="width:100px" value=3>旅馆</option>
-									</select>	
+									&nbsp;&nbsp;房屋类型：									
+									<s:select list="#{'1':'酒店','2':'客栈','3':'旅馆'}" name="house.kind"/>								
 								</div>									
 								
 								<div class="row_padding">										
 									<span id="star_color">*</span>面&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;积：
-									<input id="area" name="area" type="text" onpropertychange="checkFloat(this.value)" oninput="checkFloat(this.value)"/>平方米
+									<input id="area" name="area" type="text" onpropertychange="checkFloat(this.value)" oninput="checkFloat(this.value)"
+										value=<s:property value="house.area" /> />平方米
 								</div>
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;可住人数：
-									<select id="guestnum" name="guestnum">
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
-										<option value=4>4</option>
-										<option value=5>5</option>									
-									</select>										
+									<s:select list="#{'1':1,'2':2,'3':3,'4':4,'5':5}" name="house.guestnum"/>																
 								</div>
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;床&nbsp;&nbsp;位&nbsp;&nbsp;数：
-									<select id="bednum" name="bednum">
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
-										<option value=4>4</option>
-										<option value=5>5</option>									
-									</select>									
+									<s:select list="#{'1':1,'2':2,'3':3,'4':4,'5':5}" name="house.bednum"/>									
 								</div>
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;卧&nbsp;&nbsp;室&nbsp;&nbsp;数：
-									<select id="bedroomnum" name="bedroomnum">
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
-										<option value=4>4</option>
-										<option value=5>5</option>					
-									</select>									
+									<s:select list="#{'1':1,'2':2,'3':3,'4':4,'5':5}" name="house.bedroomnum"/>	
 								</div>
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;房&nbsp;&nbsp;间&nbsp;&nbsp;数：
-									<select id="roomnum" name="roomnum">
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
-										<option value=4>4</option>
-										<option value=5>5</option>									
-									</select>	
+									<s:select list="#{'1':1,'2':2,'3':3,'4':4,'5':5}" name="house.roomnum"/>	
 								</div>
 								
 								<!-- 不规范字段 -->
 								<div class="row_padding">
 									&nbsp;&nbsp;床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：
-									<select id="bedtype" name="bedtype">
-										<option>双人床</option>
-										<option>单人床</option>
-										<option>高低床</option>
-									</select>	
+									<s:select list="#{'双人床':'双人床','单人床':'单人床','高低床':'高低床'}" name="house.bedtype"/>	
 								</div>
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;卫生间数：
-									<select id="toiletnum" name="toiletnum">
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
-									</select>	
+									<s:select list="#{'1':1,'2':2,'3':3}" name="house.toiletnum"/>	
 								</div>
 								
 								<div class="row_padding">
-									&nbsp;&nbsp;入住时间：									
-									<select id="checkinTime" name="checkinTime">
-										<option>12:00</option>
-										<option>13:00</option>
-										<option>14:00</option>
-									</select>		
-															
+									&nbsp;&nbsp;入住时间：		
+									<s:select list="#{'12:00':'12:00','13:00':'13:00','14:00':'14:00'}" name="house.checkinTime"/>								
 								</div>
 								
 								<div class="row_padding">
 									&nbsp;&nbsp;退房时间：
-									<select id="checkoutTime" name="checkoutTime">
-										<option>11:00</option>
-										<option>12:00</option>
-										<option>13:00</option>
-										<option>14:00</option>
-									</select>											
+									<s:select list="#{'11:00':'11:00','12:00':'12:00','13:00':'13:00','14:00':'14:00'}" name="house.checkoutTime"/>								
 								</div>
 								
 								<div class="row_padding">
 									<span id="star_color">*</span>最小天数：
-									<input id="minday" name="minday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"/>									
+									<input id="minday" name="minday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"
+										value=<s:property value="house.minday" /> />									
 								</div>								
 								
 								<div class="row_padding">
 									<span id="star_color">*</span>最大天数：
-									<input id="maxday" name="maxday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"/>
+									<input id="maxday" name="maxday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"
+										value=<s:property value="house.maxday" /> />
 								</div>
 								
 								<div class="row_padding2">									
@@ -334,70 +284,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<div class="reg-right1">
 								<div class="row_padding">
 									<span id="star_color">*</span>全额退款日：
-									<input id="refundday" name="refundday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"/><!-- 这里到时候添加插件选择时间 -->								
+									<input id="refundday" name="refundday" type="text" onpropertychange="checkInt(this.value)" oninput="checkInt(this.value)"
+										value=<s:property value="house.refundday" /> />							
 								</div>
 																	
 								<div class="row_padding">
 									<span id="star_color">*</span>日&nbsp;&nbsp;&nbsp;&nbsp;租&nbsp;&nbsp;&nbsp;&nbsp;价：
-									<input id="dayprice" name="dayprice" type="text" onpropertychange="checkFloat(this.value)" oninput="checkFloat(this.value)"/>元/天	
+									<input id="dayprice" name="dayprice" type="text" onpropertychange="checkFloat(this.value)" oninput="checkFloat(this.value)"
+										value=<s:property value="house.dayprice" /> />元/天	
 								</div>
 								
 								<div class="row_padding">								
 									<span id="star_color">*</span>房屋描述：							
-									<textarea id="roomdesc" name="roomdesc" rows="2" cols="15"></textarea>								
+									<textarea id="roomdesc" name="roomdesc" rows="2" cols="15"><s:property value="house.roomdesc" /></textarea>								
 								</div>
 								
 								<div class="row_padding">
 									<span id="star_color">*</span>使用规则：
-									<textarea id="userule" name="userule" rows="2" cols="15"></textarea>
+									<textarea id="userule" name="userule" rows="2" cols="15" ><s:property value="house.userule" /></textarea>
 								</div>
 								
 								<div class="padding_row">
 									<span id="star_color">*</span>设施服务：
-									<textarea id="facility" name="facility" rows="2" cols="15"></textarea>		
+									<textarea id="facility" name="facility" rows="2" cols="15"><s:property value="house.facility" /></textarea>		
 								</div>
 								
 								<div class="padding_row">
 									<span id="star_color">*</span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：	
-									<textarea id="address" name="address" rows="2" cols="15"></textarea>	
+									<textarea id="address" name="address" rows="2" cols="15"><s:property value="house.address" /></textarea>	
 								</div>
 								
 								<!-- 不规范字段 -->
 								<div class="padding_row">
 									&nbsp;&nbsp;付款规则：
-									<select id="payrule" name="payrule">
-										<option>严格</option>
-										<option>不严格</option>
-									</select>
+									<s:select list="#{'严格':'严格','不严格':'不严格'}" name="house.payrule"></s:select>
 								</div>
 								
-								<div class="padding_row">
+								<!-- 对于图片的修改，待后续添加 -->
+								<%-- <div class="padding_row">
 									<span id="star_color">*</span>房屋图片：
-									<input id="picture1" name="picture01" type="file" class="filebox"/>
+									<input id="picture1" name="picture01" type="file" class="filebox" value=<s:property value="house.picture1"/> />
 								</div>
 								
 								<div class="padding_row">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="picture2" name="picture02" type="file" class="filebox"/>
+									<input id="picture2" name="picture02" type="file" class="filebox" value=<s:property value="house.picture2"/>/>
 								</div>
 								
 								<div class="padding_row">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="picture3" name="picture03" type="file" class="filebox"/>
-								</div>
+									<input id="picture3" name="picture03" type="file" class="filebox" value=<s:property value="house.picture3"/> />
+								</div> --%>
 								
 								<!-- 隐藏输入框，用于设定默认的状态和删除标志，以及获取用户id -->
 								<input id="user_id" name="user_id" type="hidden" value="1"/>
 								<input id="state" name="state" type="hidden" value="1"/>
 								<input id="del" name="del" type="hidden" value="0"/>
+								<input id="id" name="id" type="hidden" value=<s:property value="house.id" /> />
+								
 								
 							</div>
 							<!-- end of right1 -->
-											
+							
 						</form>		
-
+						
 					</div>
 					
 				</div>

@@ -2,6 +2,8 @@ package com.ruanko.model;
 
 import java.util.Date;
 
+import javax.mail.Flags.Flag;
+
 public class House {
 	   int id;                   //int not null primary key  auto_increment, -- '关键字，自增字段'
 	   int user_id;              //int, -- '用户id'
@@ -32,7 +34,7 @@ public class House {
 	   int maxday;               //int,-- '最大天数'
 	   int refundday ;           //int, -- '全额退款日'
 	   String payrule;              //varchar(50), -- '付款规则'
-	   int dayprice;            //float(8,2), -- '日租价'
+	   float dayprice;            //float(8,2), -- '日租价'
 	   Date createtime;           //timestamp default CURRENT_TIMESTAMP, -- '创建时间'
 	   int state;                //int, -- '状态（1、待审核，2、审核待发布，3已发布，4、审核拒绝）' 
 	   int del;
@@ -221,11 +223,11 @@ public class House {
 	public void setPayrule(String payrule) {
 		this.payrule = payrule;
 	}
-	public int getDayprice() {
+	public float getDayprice() {
 		return dayprice;
 	}
-	public void setDayprice(int dayprice) {
-		this.dayprice = dayprice;
+	public void setDayprice(float f) {
+		this.dayprice = f;
 	}
 	public Date getCreatetime() {
 		return createtime;
