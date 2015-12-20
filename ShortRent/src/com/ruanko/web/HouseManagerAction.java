@@ -35,6 +35,10 @@ public class HouseManagerAction extends ActionSupport {
 	public String  allUncheckedHouse_list() {
 		// TODO Auto-generated method stub
 		houses = new HouseManagerService().listAllUncheckedHouse(pageSize, pageNow);
-		return "list";
+		if(houses != null){
+			return "list";
+		}
+		else 
+			return "fail";
 	}
 }

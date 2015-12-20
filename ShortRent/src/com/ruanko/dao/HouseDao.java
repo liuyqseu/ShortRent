@@ -1,14 +1,9 @@
 package com.ruanko.dao;
 
-import java.awt.TexturePaint;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.Cookie;
-
-import org.apache.catalina.startup.HomesUserDatabase;
 
 import com.ruanko.model.House;
 import com.ruanko.util.BaseDao;
