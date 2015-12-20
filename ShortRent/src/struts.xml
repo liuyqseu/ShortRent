@@ -27,35 +27,42 @@
 			method="allUncheckedHouse_{1}">
 			<result name="{1}">/allUncheckedHouse_{1}.jsp</result>
 		</action>
-		
-		
-		<!-- liuyanqing -->		
-		<action name="toCreateHouse" class="com.ruanko.web.ToCreateHouseAction" method="redirect">			
+		<action name="allcheckedHouse_*" class="com.ruanko.web.HouseManagerAction"
+			method="allcheckedHouse_{1}">
+			<result name="{1}">/allcheckedHouse_{1}.jsp</result>
+		</action>
+		<!-- liuyanqing -->
+		<action name="toCreateHouse" class="com.ruanko.web.ToCreateHouseAction"
+			method="redirect">
 			<result name="success">/index.jsp</result>
 		</action>
-		
-		<action name="createHouse" class="com.ruanko.web.CreateHouseAction" method="execute">			
+
+		<action name="createHouse" class="com.ruanko.web.CreateHouseAction"
+			method="execute">
 			<result name="success">/index.jsp</result>
 		</action>
-		
-		<action name="showMyHouse" class="com.ruanko.web.ShowMyHouseAction" method="execute">		
-			<result name="success">/house/myHouse.jsp</result>		
+
+		<action name="showMyHouse" class="com.ruanko.web.ShowMyHouseAction"
+			method="execute">
+			<result name="success">/house/myHouse.jsp</result>
 		</action>
-		
-		
-		<action name="toUpdateHouse" class="com.ruanko.web.ToUpdateHouseAction" method="execute">		
-			<result name="success">/house/updateHouse.jsp</result>		
-			<result name="error">/error.jsp</result>		
+
+
+		<action name="toUpdateHouse" class="com.ruanko.web.ToUpdateHouseAction"
+			method="execute">
+			<result name="success">/house/updateHouse.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
-		
-		<action name="updateHouse" class="com.ruanko.web.UpdateHouseAction" method="execute">		
-			<result name="success">/success.jsp</result>		
-			<result name="error">/error.jsp</result>		
+
+		<action name="updateHouse" class="com.ruanko.web.UpdateHouseAction"
+			method="execute">
+			<result name="success">/success.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
-		
-		
-		
-		
-		
+
+
+
+
+
 	</package>
 </struts>

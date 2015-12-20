@@ -6,4 +6,5 @@ import com.ruanko.model.House;
 
 public interface HouseManager {
 	public List<House> listAllUncheckedHouse(int pageSize, int pageNow);
+	public List<House> listAllcheckedHouse(int pageSize, int pageNow);
 }
